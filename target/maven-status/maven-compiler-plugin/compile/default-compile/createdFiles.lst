@@ -1,0 +1,17 @@
+org\compain\library\model\Author.class
+org\compain\library\model\Copy.class
+org\compain\library\service\DTO\AuthorDTO.class
+org\compain\library\consumer\AuthorRepository.class
+org\compain\library\model\Book.class
+org\compain\library\model\Category.class
+org\compain\library\service\DTO\BookDTO.class
+org\compain\library\model\Library.class
+org\compain\library\consumer\BookRepository.class
+org\compain\library\service\BookMapper.class
+org\compain\library\service\BookService.class
+org\compain\library\model\Borrowing.class
+org\compain\library\model\Role.class
+org\compain\library\model\User.class
+org\compain\library\exposition\BookController.class
+org\compain\library\Api.class
+org\compain\library\service\DTO\CopyDTO.class

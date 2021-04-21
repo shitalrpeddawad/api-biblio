@@ -1,8 +1,12 @@
 package org.compain.library.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
+@Data
 @Entity
 @Table(name = "Borrowings", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_borrowing" }) })
 public class Borrowing {
@@ -21,59 +25,15 @@ public class Borrowing {
     private User user;
 
     @Column(name = "borrowing_date")
-    private Date borrowingDate;
+    private LocalDateTime borrowingDate;
 
-    @Column(name = "renawal")
-    private Boolean renawal;
+    @Column(name = "borrowing_limit_date")
+    private LocalDateTime borrowingLimitDate;
+
+    @Column(name = "renewal")
+    private Boolean renewal;
 
     @Column(name = "returned")
     private Boolean returned;
 
-    public Long getIdBorrowing() {
-        return idBorrowing;
-    }
-
-    public void setIdBorrowing(Long idBorrowing) {
-        this.idBorrowing = idBorrowing;
-    }
-
-    public Copy getCopy() {
-        return copy;
-    }
-
-    public void setCopy(Copy copy) {
-        this.copy = copy;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Date getBorrowingDate() {
-        return borrowingDate;
-    }
-
-    public void setBorrowingDate(Date borrowingDate) {
-        this.borrowingDate = borrowingDate;
-    }
-
-    public Boolean getRenawal() {
-        return renawal;
-    }
-
-    public void setRenawal(Boolean renawal) {
-        this.renawal = renawal;
-    }
-
-    public Boolean getReturned() {
-        return returned;
-    }
-
-    public void setReturned(Boolean returned) {
-        this.returned = returned;
-    }
 }

@@ -1,10 +1,11 @@
 package org.compain.library.service;
 import org.compain.library.consumer.BookRepository;
+import org.compain.library.consumer.CopyRepository;
 import org.compain.library.model.Book;
 import org.compain.library.service.DTO.BookDTO;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 
 import static java.util.stream.Collectors.toList;
@@ -13,9 +14,11 @@ import static java.util.stream.Collectors.toList;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final CopyRepository copyRepository;
 
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, CopyRepository copyRepository) {
         this.bookRepository = bookRepository;
+        this.copyRepository = copyRepository;
     }
 
     public List<BookDTO> findAll() {
@@ -23,22 +26,37 @@ public class BookService {
         return books.stream().map(BookMapper::toDTO).collect(toList());
     }
 
-    //public List<BookDTO> findByTitle(String bookTitle) {
-     //   List<Book> books = bookRepository.findByTitle(bookTitle);
-     //   return books.stream().map(BookMapper::toDTO).collect(toList());
-    //}
+    public List<BookDTO> findAllByLibrary(Long id) {
+        List<Book> books = bookRepository.findBookByLibrary(id);
+        return books.stream().map(b-> Map.entry(b, copyRepository.countCopiesNumberByBookAndLibrary(b.getIdBook(),id)))
+                .map(BookMapper::toDTO).collect(toList());
 
-    //public List<BookDTO> findByCategory(String category){
-    //    List<Book> books = bookRepository.findByCategory(category);
-     //   return books.stream().map(BookMapper::toDTO).collect(toList());
-    //}
-
-    //public List<BookDTO> findByAuthor(String author){
-    //    List<Book> books = bookRepository.findByAuthor(author);
-    //    return books.stream().map(BookMapper::toDTO).collect(toList());
-   // }
-    public BookDTO findById(Long idBook){
-       Optional<Book> book = bookRepository.findById(idBook);
-        return book.map(BookMapper::toDTO).orElse(null);
     }
+
+    public List<BookDTO> findAllAvailableByLibrary(Long id) {
+        List<Book> books = bookRepository.findBookByLibrary(id);
+        return books.stream().map(b-> Map.entry(b, copyRepository.countAvailableCopiesNumberByBookAndLibrary(b.getIdBook(),id)))
+                .map(BookMapper::toDTO).collect(toList());
+
+    }
+
+    public List<BookDTO> search(String title, String authorName, String categoryName, String idBook) {
+        List<Book> books = bookRepository.search(title, authorName, categoryName, idBook);
+        return books.stream().map(BookMapper::toDTO).collect(toList());
+    }
+
+    public void deleteBook(Long idBook){
+        bookRepository.deleteById(idBook);
+    }
+
+    public void createBook(Book book){
+        bookRepository.save(book);
+    }
+
+    public BookDTO getBook(Long idBook){
+        Book book = bookRepository.getBook(idBook);
+        return BookMapper.toDTO(book);
+    }
+
+
 }

@@ -3,6 +3,8 @@ package org.compain.library.service;
 import org.compain.library.consumer.BorrowingRepository;
 import org.compain.library.model.Borrowing;
 import org.compain.library.service.DTO.BorrowingDTO;
+import org.compain.library.service.DTO.MailingUserDTO;
+import org.hibernate.type.LocalDateTimeType;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
@@ -32,23 +34,21 @@ public class BorrowingService {
         return borrowings.stream().map(BorrowingMapper::toDTO).collect(toList());
     }
 
-    public void renewalBorrowing(Long idBorrowing){
-
-        Borrowing oldBorrowing =  borrowingRepository.findByIdBorrowing(idBorrowing);
-        Date today = new Date();
-        LocalDateTime borrowingDate = oldBorrowing.getBorrowingDate();
-        borrowingDate.plusWeeks(8);
-
-
-        if(borrowingDate.isAfter(oldBorrowing.getBorrowingLimitDate()) && !oldBorrowing.getReturned()){
-        oldBorrowing.setRenewal(true);
-        borrowingRepository.save(oldBorrowing);
-        }
-
+    public BorrowingDTO findByIdBorrowing(Long idBorrowing){
+        return  BorrowingMapper.toDTO(borrowingRepository.findByIdBorrowing(idBorrowing));
     }
-    public void updateBorrowing(Borrowing borrowing, Long idBorrowing) {
-      Borrowing oldBorrowing = borrowingRepository.findByIdBorrowing(idBorrowing);
-      oldBorrowing.setReturned(borrowing.getReturned());
-     borrowingRepository.save(borrowing);
+
+    public List<BorrowingDTO> findByDateBefore(LocalDateTime dateTime){
+        List<Borrowing> borrowings = borrowingRepository.findByDateBefore(dateTime);
+        return borrowings.stream().map(BorrowingMapper::toDTO).collect(toList());
+    }
+
+    public void updateBorrowing(BorrowingDTO borrowingPatched){
+        Borrowing oldBorrowing =  borrowingRepository.findByIdBorrowing(borrowingPatched.getIdBorrowing());
+        borrowingRepository.save(BorrowingMapper.patch(borrowingPatched, oldBorrowing));
+    }
+
+    public void save(BorrowingDTO newBorrowingDTO) {
+        borrowingRepository.save(BorrowingMapper.toEntity(newBorrowingDTO));
     }
 }

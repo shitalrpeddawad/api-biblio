@@ -1,11 +1,9 @@
 package org.compain.library.exposition;
 
-import org.compain.library.model.Book;
-import org.compain.library.model.Category;
+import org.compain.library.service.EntityNotFoundException;
 import org.compain.library.service.BookService;
 import org.compain.library.service.DTO.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,17 +35,17 @@ public class BookController {
     public List<BookDTO> search(@RequestParam (required = false) String title, @RequestParam (required = false) String authorName, @RequestParam (required = false) String categoryName, @RequestParam (required = false) String idBook) {
         return bookService.search(title, authorName, categoryName, idBook);
     }
-    @GetMapping("book/{id}")
-    public BookDTO getBook(@PathVariable("id") Long id){
-        return bookService.getBook(id);
-    }
+    //@GetMapping("book/{id}")
+    //public BookDTO getBook(@PathVariable("id") Long id){
+    //    BookDTO bookDTO = bookService.getBook(id);
+    //    if (bookDTO == null) throw new EntityNotFoundException(id);
+    //    return bookDTO;
+    //}
 
     @DeleteMapping("delete/{id}")
     public void deleteBook(@PathVariable("id") Long id){
         bookService.deleteBook(id);
     }
-
-
 
 }
 

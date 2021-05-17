@@ -10,6 +10,7 @@ public class CopyMapper {
     public static CopyDTO toDTO(Copy copy){
         CopyDTO copyDto = new CopyDTO();
         copyDto.setBookDto(BookMapper.toDTO(copy.getBook()));
+        copyDto.setLibraryDto(LibraryMapper.toDTO(copy.getLibrary()));
         return copyDto;
     }
 

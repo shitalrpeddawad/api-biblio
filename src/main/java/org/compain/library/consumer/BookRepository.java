@@ -25,7 +25,6 @@ public interface BookRepository extends JpaRepository<Book, Long>, IBookReposito
             "WHERE copies.id_library = :idLibrary",
             nativeQuery = true
     )
-
     List<Book> findBookByLibrary(Long idLibrary);
 
 

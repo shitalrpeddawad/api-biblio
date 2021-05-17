@@ -13,6 +13,7 @@ public class BorrowingMapper {
         borrowingDTO.setRenewal(borrowing.getRenewal());
         borrowingDTO.setReturned(borrowing.getReturned());
         borrowingDTO.setIdBorrowing(borrowing.getIdBorrowing());
+        borrowingDTO.setBorrowingLimitDate(borrowing.getBorrowingLimitDate());
         return borrowingDTO;
     }
 
@@ -24,6 +25,23 @@ public class BorrowingMapper {
         borrowing.setRenewal(borrowingDTO.getRenewal());
         borrowing.setReturned(borrowingDTO.getReturned());
         borrowing.setIdBorrowing(borrowingDTO.getIdBorrowing());
+        borrowing.setBorrowingLimitDate(borrowingDTO.getBorrowingLimitDate());
         return borrowing;
+    }
+
+    public static Borrowing patch(BorrowingDTO borrowingDTO, Borrowing borrowing){
+        if(borrowingDTO.getRenewal() != null) {
+            borrowing.setRenewal(borrowingDTO.getRenewal());
+        }
+        if(borrowingDTO.getBorrowingDate() != null) {
+            borrowing.setBorrowingDate(borrowingDTO.getBorrowingDate());
+        }
+        if(borrowingDTO.getReturned() != null) {
+            borrowing.setReturned(borrowingDTO.getReturned());
+        }
+        if(borrowingDTO.getBorrowingLimitDate() != null) {
+            borrowing.setBorrowingLimitDate(borrowingDTO.getBorrowingLimitDate());
+        }
+        return  borrowing;
     }
 }

@@ -21,7 +21,7 @@ public class BookRepositoryImpl implements IBookRepository {
     private EntityManager entityManager;
 
     public List<Book> search(String title, String authorName, String categoryName, String idBook) {
-        String sql = "SELECT s FROM " + Book.class.getName() + " s" + " WHERE 1=1";
+        String sql = "SELECT s FROM " + Book.class.getName() + " s" + " WHERE 1=1 ";
         Map<String, String> parameters = new HashMap<>();
 
         if (title != null && !title.equals("")) {

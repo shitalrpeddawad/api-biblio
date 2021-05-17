@@ -11,6 +11,7 @@ public class BorrowingDTO{
     private CopyDTO copyDto;
     private UserDTO userDto;
     private LocalDateTime borrowingDate;
+    private LocalDateTime borrowingLimitDate;
     private Boolean renewal;
     private Boolean returned;
 

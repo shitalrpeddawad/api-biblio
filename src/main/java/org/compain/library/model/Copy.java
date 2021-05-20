@@ -1,7 +1,10 @@
 package org.compain.library.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 
+@Data
 @Entity
 @Table(name = "Copies", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_copy" }) })
 
@@ -23,35 +26,4 @@ public class Copy {
     @Column(name = "available")
     private Boolean available;
 
-    public Long getIdCopy() {
-        return idCopy;
-    }
-
-    public void setIdCopy(Long idCopy) {
-        this.idCopy = idCopy;
-    }
-
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    public Library getLibrary() {
-        return library;
-    }
-
-    public void setLibrary(Library library) {
-        this.library = library;
-    }
-
-    public Boolean getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
 }

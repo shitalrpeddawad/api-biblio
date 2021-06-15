@@ -1,6 +1,5 @@
 package org.compain.library.exposition;
 
-import org.compain.library.service.EntityNotFoundException;
 import org.compain.library.service.BookService;
 import org.compain.library.service.DTO.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;

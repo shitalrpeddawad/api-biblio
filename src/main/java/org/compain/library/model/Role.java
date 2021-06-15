@@ -18,7 +18,4 @@ public class Role {
     @Column(name = "designation")
     private String designation;
 
-    @OneToMany(targetEntity = User.class, mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<User> users;
-
 }

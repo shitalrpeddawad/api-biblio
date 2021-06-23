@@ -1,5 +1,6 @@
 package org.compain.library.exposition;
 
+import org.compain.library.security.ClientToken;
 import org.compain.library.service.BorrowingMapper;
 import org.compain.library.service.BorrowingService;
 import org.compain.library.service.DTO.BorrowingDTO;
@@ -28,9 +29,9 @@ public class BorrowingController {
         return borrowingService.findAll();
     }
 
-    @GetMapping("/user/{idUser}")
-    public List<BorrowingDTO> findAllByUser(@PathVariable("idUser") Long idUser) {
-        return borrowingService.findAllByIdUser(idUser);
+    @GetMapping("/user")
+    public List<BorrowingDTO> findAllByUser(ClientToken user) {
+        return borrowingService.findAllByIdUser(user.getUserId());
     }
 
     @GetMapping("/batch")

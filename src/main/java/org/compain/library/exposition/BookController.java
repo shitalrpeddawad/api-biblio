@@ -1,10 +1,18 @@
 package org.compain.library.exposition;
 
+import org.compain.library.security.AuthenticationService;
+import org.compain.library.security.ClientToken;
+import org.compain.library.security.JwtAuthenticationFilter;
 import org.compain.library.service.BookService;
+import org.compain.library.service.DTO.AuthenticationDTO;
 import org.compain.library.service.DTO.BookDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -13,15 +21,20 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+    @Autowired
+private AuthenticationService authenticationService;
+
 
 
     @GetMapping
     public List<BookDTO> findAll() {
+
         return bookService.findAll();
     }
 
     @GetMapping("/library/{idLibrary}")
     public List<BookDTO> findAllByLibrary(@PathVariable("idLibrary") Long idLibrary) {
+
         return bookService.findAllByLibrary(idLibrary);
     }
 

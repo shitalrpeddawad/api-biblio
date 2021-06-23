@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_user" }) })
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "id_user", "email" }) })
 public class User {
 
     @Id
@@ -17,7 +17,7 @@ public class User {
     private String name;
     @Column(name = "firstname")
     private String firstname;
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;

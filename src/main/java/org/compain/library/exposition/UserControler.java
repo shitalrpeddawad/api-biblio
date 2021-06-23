@@ -6,6 +6,7 @@ import org.compain.library.service.DTO.AuthenticationDTO;
 import org.compain.library.service.DTO.UserDTO;
 import org.compain.library.service.UserMapper;
 import org.compain.library.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class UserControler {
     @PostMapping("/login")
     public ResponseEntity<String> signIn(@RequestBody AuthenticationDTO dto){
         String token = authenticationService.signIn(dto.getUsername(), dto.getPassword());
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
     @PostMapping("/signup")

@@ -10,6 +10,7 @@ public class UserMapper {
         userDTO.setEmail(user.getEmail());
         userDTO.setFirstname(user.getFirstname());
         userDTO.setName(user.getName());
+        userDTO.setPassword(user.getPassword());
         return userDTO;
     }
 
@@ -18,6 +19,7 @@ public class UserMapper {
         user.setEmail(userDTO.getEmail());
         user.setName(userDTO.getName());
         user.setFirstname(userDTO.getFirstname());
+        user.setPassword(userDTO.getPassword());
         return user;
     }
 }

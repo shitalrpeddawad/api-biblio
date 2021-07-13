@@ -33,13 +33,13 @@ public class BookController {
     }
 
     @GetMapping("/book")
-    public BookDTO findBookById(ClientToken user,Long idBook) {
+    public BookDTO findBookById(ClientToken user,@RequestParam Long idBook) {
         return bookService.findById(idBook);
     }
 
     @GetMapping("/search")
-    public List<BookDTO> search(@RequestParam (required = false) String title, @RequestParam (required = false) String authorName, @RequestParam (required = false) String category) {
-        return bookService.search(title, authorName, category);
+    public List<BookDTO> search(@RequestParam (required = false) String title, @RequestParam (required = false) String authorName, @RequestParam (required = false) String category, ClientToken user) {
+        return bookService.search(title, authorName, category, userService.findByIdUser(user.getUserId()).get().getLibrary().getIdLibrary());
     }
 
     @DeleteMapping("delete")

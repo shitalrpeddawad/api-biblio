@@ -44,9 +44,10 @@ public class BookService {
 
     }
 
-    public List<BookDTO> search(String title, String authorName, String categoryName) {
+    public List<BookDTO> search(String title, String authorName, String categoryName, Long idLibrary) {
         List<Book> books = bookRepository.search(title, authorName, categoryName);
-        return books.stream().map(BookMapper::toDTO).collect(toList());
+        return books.stream().map(b-> Map.entry(b, copyRepository.countAvailableCopiesNumberByBookAndLibrary(b.getIdBook(),idLibrary)))
+                .map(BookMapper::toDTO).collect(toList());
     }
 
     public void deleteBook(Long idBook){

@@ -1,7 +1,9 @@
 package org.compain.library.exposition;
 
 
+import org.compain.library.model.User;
 import org.compain.library.security.AuthenticationService;
+import org.compain.library.security.ClientToken;
 import org.compain.library.service.DTO.AuthenticationDTO;
 import org.compain.library.service.DTO.UserDTO;
 import org.compain.library.service.UserMapper;
@@ -9,6 +11,9 @@ import org.compain.library.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/connexion")

@@ -1,9 +1,11 @@
 package org.compain.library.exposition;
 
+import org.compain.library.model.Borrowing;
 import org.compain.library.security.ClientToken;
 import org.compain.library.service.BorrowingMapper;
 import org.compain.library.service.BorrowingService;
 import org.compain.library.service.DTO.BorrowingDTO;
+import org.compain.library.service.DTO.InfoBorrowingDTO;
 import org.compain.library.service.DTO.MailingUserDTO;
 import org.compain.library.service.MailingUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ public class BorrowingController {
     }
 
     @GetMapping("/user")
-    public List<BorrowingDTO> findAllByUser(ClientToken user) {
+    public List<InfoBorrowingDTO> findAllByUser(ClientToken user) {
         return borrowingService.findAllByIdUser(user.getUserId());
     }
 
@@ -48,8 +50,8 @@ public class BorrowingController {
     return mailingUserDTOList ;
     }
 
-    @PatchMapping("/borrowing-prolongation/{idBorrowing}")
-    public ResponseEntity patchRenewal(@PathVariable("idBorrowing") Long idBorrowing) {
+    @PostMapping("/borrowing-prolongation")
+    public void patchRenewal(ClientToken user, @RequestBody Long idBorrowing){
         LocalDateTime today = LocalDateTime.now();
         BorrowingDTO borrowingDTO = borrowingService.findByIdBorrowing(idBorrowing);
         if (borrowingDTO.getRenewal() == false && today.isBefore(borrowingDTO.getBorrowingLimitDate().plusWeeks(4))) {
@@ -57,16 +59,14 @@ public class BorrowingController {
             borrowingDTO.setRenewal(true);
             borrowingService.updateBorrowing(borrowingDTO);
         }
-        return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/borrowing-returned/{idBorrowing}")
-    public ResponseEntity patchReturned(@PathVariable("idBorrowing") Long idBorrowing) {
+    @PatchMapping("/borrowing-returned")
+    public void patchReturned(ClientToken user, @RequestBody Long idBorrowing) {
         BorrowingDTO borrowingDTO = new BorrowingDTO();
         borrowingDTO.setIdBorrowing(idBorrowing);
         borrowingDTO.setReturned(true);
         borrowingService.updateBorrowing(borrowingDTO);
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("borrowing-new")

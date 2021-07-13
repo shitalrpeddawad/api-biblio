@@ -2,8 +2,21 @@ package org.compain.library.service;
 
 import org.compain.library.model.Borrowing;
 import org.compain.library.service.DTO.BorrowingDTO;
+import org.compain.library.service.DTO.InfoBorrowingDTO;
 
 public class BorrowingMapper {
+
+    public static InfoBorrowingDTO infoBorrowingDTO(Borrowing borrowing){
+        InfoBorrowingDTO infoBorrowingDTO = new InfoBorrowingDTO();
+        infoBorrowingDTO.setIdBorrowing(borrowing.getIdBorrowing());
+        infoBorrowingDTO.setTitle(borrowing.getCopy().getBook().getTitle());
+        infoBorrowingDTO.setBorrowingDate(borrowing.getBorrowingDate());
+        infoBorrowingDTO.setBorrowingLimitDate(borrowing.getBorrowingLimitDate());
+        infoBorrowingDTO.setRenewal(borrowing.getRenewal());
+        infoBorrowingDTO.setReturned(borrowing.getReturned());
+        infoBorrowingDTO.setAuthor(borrowing.getCopy().getBook().getAuthor().getFirstname() + " " + borrowing.getCopy().getBook().getAuthor().getName());
+        return infoBorrowingDTO;
+    }
 
     public static BorrowingDTO toDTO(Borrowing borrowing){
         BorrowingDTO borrowingDTO = new BorrowingDTO();

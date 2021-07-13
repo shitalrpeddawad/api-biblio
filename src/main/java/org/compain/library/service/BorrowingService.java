@@ -3,6 +3,7 @@ package org.compain.library.service;
 import org.compain.library.consumer.BorrowingRepository;
 import org.compain.library.model.Borrowing;
 import org.compain.library.service.DTO.BorrowingDTO;
+import org.compain.library.service.DTO.InfoBorrowingDTO;
 import org.compain.library.service.DTO.MailingUserDTO;
 import org.hibernate.type.LocalDateTimeType;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,9 @@ public class BorrowingService {
         return borrowings.stream().map(BorrowingMapper::toDTO).collect(toList());
     }
 
-    public List<BorrowingDTO> findAllByIdUser(Long idUser){
+    public List<InfoBorrowingDTO> findAllByIdUser(Long idUser){
         List<Borrowing> borrowings = borrowingRepository.findByIdUser(idUser);
-        return borrowings.stream().map(BorrowingMapper::toDTO).collect(toList());
+        return borrowings.stream().map(BorrowingMapper::infoBorrowingDTO).collect(toList());
     }
 
     public BorrowingDTO findByIdBorrowing(Long idBorrowing){

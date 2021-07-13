@@ -18,7 +18,6 @@ public class BookMapper {
         bookDto.setCategoryDto(CategoryMapper.toDTO(book.getCategory()));
         bookDto.setIdBook(book.getIdBook());
         bookDto.setPublicationDate(book.getPublicationDate());
-
         return bookDto;
     }
 

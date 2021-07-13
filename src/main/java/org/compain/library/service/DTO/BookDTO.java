@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 @Data
 public class BookDTO {
-
     private Long idBook;
     private String title;
     private AuthorDTO authorDto;
@@ -15,5 +14,4 @@ public class BookDTO {
     private CategoryDTO categoryDto;
     private List<CopyDTO> copiesDto;
     private int numberOfCopies;
-
 }

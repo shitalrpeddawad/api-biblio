@@ -26,6 +26,10 @@ public class UserService {
         return userRepository.findByUsername(email);
     }
 
+    public Optional<User> findByIdUser(Long idUser){
+        return userRepository.findByIdUser(idUser);
+    }
+
     public void save(User user) {
        String password = passwordEncoder.encode(user.getPassword());
        user.setPassword(password);

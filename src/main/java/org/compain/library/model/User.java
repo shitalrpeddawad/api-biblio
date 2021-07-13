@@ -24,5 +24,8 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;
+    @ManyToOne
+    @JoinColumn( name="id_library" )
+   private Library library;
 
 }

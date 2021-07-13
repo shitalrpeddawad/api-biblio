@@ -21,6 +21,10 @@ public class BookService {
         this.copyRepository = copyRepository;
     }
 
+    public BookDTO findById(Long idBook){
+        return BookMapper.toDTO(bookRepository.findByIdBook(idBook));
+    }
+
     public List<BookDTO> findAll() {
         List<Book> books = bookRepository.findAll();
         return books.stream().map(BookMapper::toDTO).collect(toList());
@@ -40,8 +44,8 @@ public class BookService {
 
     }
 
-    public List<BookDTO> search(String title, String authorName, String categoryName, String idBook) {
-        List<Book> books = bookRepository.search(title, authorName, categoryName, idBook);
+    public List<BookDTO> search(String title, String authorName, String categoryName) {
+        List<Book> books = bookRepository.search(title, authorName, categoryName);
         return books.stream().map(BookMapper::toDTO).collect(toList());
     }
 

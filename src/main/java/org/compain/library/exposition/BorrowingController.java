@@ -1,23 +1,14 @@
 package org.compain.library.exposition;
 
-import org.compain.library.model.Borrowing;
 import org.compain.library.security.ClientToken;
-import org.compain.library.service.BorrowingMapper;
 import org.compain.library.service.BorrowingService;
 import org.compain.library.service.DTO.BorrowingDTO;
 import org.compain.library.service.DTO.InfoBorrowingDTO;
-import org.compain.library.service.DTO.MailingUserDTO;
-import org.compain.library.service.MailingUserMapper;
+import org.compain.library.service.DTO.UserLateBorrowing;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-
-import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/borrowings")
@@ -25,6 +16,7 @@ public class BorrowingController {
 
     @Autowired
     private BorrowingService borrowingService;
+
 
     @GetMapping
     public List<BorrowingDTO> findAll() {
@@ -36,42 +28,29 @@ public class BorrowingController {
         return borrowingService.findAllByIdUser(user.getUserId());
     }
 
-    @GetMapping("/batch")
-    public List<MailingUserDTO> findBorrowingsPassed(){
+    @GetMapping("/late-borrowing")
+    public List<UserLateBorrowing> findBorrowingsPassed() {
         LocalDateTime today = LocalDateTime.now();
-        List<MailingUserDTO> mailingUserDTOList = new ArrayList<>();
-        List<BorrowingDTO> borrowingDTOList = borrowingService.findByDateBefore(today);
-        for (BorrowingDTO b : borrowingDTOList)
-              {
-                  if(b.getReturned() == false ){
-                      mailingUserDTOList.add(MailingUserMapper.toMailingUserDTO(b));
-                  }
-        }
-    return mailingUserDTOList ;
+        return borrowingService.findLateBorrowing(today);
     }
 
     @PostMapping("/borrowing-prolongation")
-    public void patchRenewal(ClientToken user, @RequestBody Long idBorrowing){
-        LocalDateTime today = LocalDateTime.now();
-        BorrowingDTO borrowingDTO = borrowingService.findByIdBorrowing(idBorrowing);
-        if (borrowingDTO.getRenewal() == false && today.isBefore(borrowingDTO.getBorrowingLimitDate().plusWeeks(4))) {
-            borrowingDTO.setBorrowingLimitDate(borrowingDTO.getBorrowingLimitDate().plusWeeks(4));
-            borrowingDTO.setRenewal(true);
-            borrowingService.updateBorrowing(borrowingDTO);
-        }
+    public void renewalBorrowing(ClientToken user, @RequestBody Long idBorrowing) {
+    borrowingService.renewBorrowing(idBorrowing);
     }
 
-    @PatchMapping("/borrowing-returned")
-    public void patchReturned(ClientToken user, @RequestBody Long idBorrowing) {
-        BorrowingDTO borrowingDTO = new BorrowingDTO();
-        borrowingDTO.setIdBorrowing(idBorrowing);
-        borrowingDTO.setReturned(true);
-        borrowingService.updateBorrowing(borrowingDTO);
+    @PostMapping("/borrowing-returned")
+    public void returnedBorrowing(ClientToken user, @RequestBody Long idBorrowing) {
+        borrowingService.returnBorrowing(idBorrowing);
     }
 
     @PostMapping("borrowing-new")
-    public ResponseEntity<Void> addBorrowing(@RequestBody BorrowingDTO newBorrowingDTO) {
+    public void addBorrowing(@RequestBody BorrowingDTO newBorrowingDTO) {
         borrowingService.save(newBorrowingDTO);
-        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/recovery-late-borrowing")
+    public void sendMailForRecoveryLateBorrowing(UserLateBorrowing userLateBorrowing){
+
     }
 }

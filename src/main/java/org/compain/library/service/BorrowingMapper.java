@@ -1,8 +1,14 @@
 package org.compain.library.service;
 
 import org.compain.library.model.Borrowing;
+import org.compain.library.model.User;
+import org.compain.library.service.DTO.UserLateBorrowing;
 import org.compain.library.service.DTO.BorrowingDTO;
 import org.compain.library.service.DTO.InfoBorrowingDTO;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BorrowingMapper {
 
@@ -56,5 +62,21 @@ public class BorrowingMapper {
             borrowing.setBorrowingLimitDate(borrowingDTO.getBorrowingLimitDate());
         }
         return  borrowing;
+    }
+
+    public static UserLateBorrowing toUserLateBorrowing(Map.Entry<User, List<Borrowing>> entry){
+        UserLateBorrowing userLateBorrowing = new UserLateBorrowing();
+        userLateBorrowing.setEmail(entry.getKey().getEmail());
+        userLateBorrowing.setFirsname(entry.getKey().getFirstname());
+        userLateBorrowing.setName(entry.getKey().getName());
+        List<UserLateBorrowing.LateBorrowing> collect = entry.getValue().stream().map(b -> {
+            UserLateBorrowing.LateBorrowing lateBorrowing = new UserLateBorrowing.LateBorrowing();
+            lateBorrowing.setBorrowing_limit_date(b.getBorrowingLimitDate());
+            lateBorrowing.setAuthor(b.getCopy().getBook().getAuthor().getName() + " " + b.getCopy().getBook().getAuthor().getFirstname());
+            lateBorrowing.setTitle(b.getCopy().getBook().getTitle());
+            return lateBorrowing;
+        }).collect(Collectors.toList());
+        userLateBorrowing.setLateBorrowingList(collect);
+        return userLateBorrowing;
     }
 }

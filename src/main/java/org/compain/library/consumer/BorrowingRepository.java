@@ -24,10 +24,11 @@ public interface BorrowingRepository extends JpaRepository<Borrowing, Long> {
     Borrowing findByIdBorrowing(Long idBorrowing);
     @Query(
             value =  "SELECT * FROM borrowings s " +
-                    "WHERE s.borrowing_limit_date < :dateTime",
+                    "WHERE s.borrowing_limit_date < :dateTime " +
+                    "AND returned = false",
             nativeQuery = true
     )
-    List<Borrowing> findByDateBefore(LocalDateTime dateTime);
+    List<Borrowing> findLateBorrowing(LocalDateTime dateTime);
 
 
 }

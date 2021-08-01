@@ -67,12 +67,12 @@ public class BorrowingMapper {
     public static UserLateBorrowing toUserLateBorrowing(Map.Entry<User, List<Borrowing>> entry){
         UserLateBorrowing userLateBorrowing = new UserLateBorrowing();
         userLateBorrowing.setEmail(entry.getKey().getEmail());
-        userLateBorrowing.setFirsname(entry.getKey().getFirstname());
+        userLateBorrowing.setFirstname(entry.getKey().getFirstname());
         userLateBorrowing.setName(entry.getKey().getName());
         List<UserLateBorrowing.LateBorrowing> collect = entry.getValue().stream().map(b -> {
             UserLateBorrowing.LateBorrowing lateBorrowing = new UserLateBorrowing.LateBorrowing();
             lateBorrowing.setBorrowing_limit_date(b.getBorrowingLimitDate());
-            lateBorrowing.setAuthor(b.getCopy().getBook().getAuthor().getName() + " " + b.getCopy().getBook().getAuthor().getFirstname());
+            lateBorrowing.setAuthor(b.getCopy().getBook().getAuthor().getFirstname() + " " + b.getCopy().getBook().getAuthor().getName());
             lateBorrowing.setTitle(b.getCopy().getBook().getTitle());
             return lateBorrowing;
         }).collect(Collectors.toList());

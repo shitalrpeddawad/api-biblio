@@ -22,7 +22,6 @@ public class Category {
     @Column(name = "description")
     private String description;
 
-    @OneToMany( targetEntity= Book.class, mappedBy="category", cascade = CascadeType.ALL, fetch= FetchType.EAGER )
+    @OneToMany( targetEntity= Book.class, mappedBy="category", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
     private List<Book> books;
-
 }

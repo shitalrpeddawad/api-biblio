@@ -5,8 +5,11 @@ import org.compain.library.service.BorrowingService;
 import org.compain.library.service.DTO.BorrowingDTO;
 import org.compain.library.service.DTO.InfoBorrowingDTO;
 import org.compain.library.service.DTO.UserLateBorrowing;
+import org.compain.library.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -16,7 +19,8 @@ public class BorrowingController {
 
     @Autowired
     private BorrowingService borrowingService;
-
+    @Autowired
+    private MailService mailService;
 
     @GetMapping
     public List<BorrowingDTO> findAll() {
@@ -50,7 +54,7 @@ public class BorrowingController {
     }
 
     @PostMapping("/recovery-late-borrowing")
-    public void sendMailForRecoveryLateBorrowing(UserLateBorrowing userLateBorrowing){
-
+    public void sendMailForRecoveryLateBorrowing(@RequestBody UserLateBorrowing userLateBorrowing) throws MessagingException {
+    mailService.sendMailForLateBorrowing(userLateBorrowing);
     }
 }

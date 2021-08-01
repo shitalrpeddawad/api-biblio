@@ -9,25 +9,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BookRepository extends JpaRepository<Book, Long>, IBookRepository  {
+public interface BookRepository extends JpaRepository<Book, Long>, IBookRepository {
 
 
-    @Query(
-            value = "SELECT s FROM Book s "
-                    + "LEFT JOIN FETCH s.copies copy "
-                    + "WHERE s.idBook= :idBook "
-    )
-    Book getBook(Long idBook);
-
-    @Query(
-    value =  "SELECT DISTINCT b.* FROM books b " +
+    @Query(value = "SELECT DISTINCT b.* FROM books b " +
             "INNER JOIN copies ON b.id_book = copies.id_book " +
             "WHERE copies.id_library = :idLibrary",
-            nativeQuery = true
-    )
+            nativeQuery = true)
     List<Book> findBookByLibrary(Long idLibrary);
+
+    @Query(value = "SELECT * FROM books b " +
+            "INNER JOIN categories c ON b.id_category = c.id_category " +
+            "WHERE b.id_book = :idBook",
+            nativeQuery = true)
     Book findByIdBook(Long idBook);
-
-
-
 }

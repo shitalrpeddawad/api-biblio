@@ -1,3 +1,6 @@
+batch:
+  mail:
+    password: ${BATCH_MAIL_PASSWORD}
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -10,6 +13,18 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: testmailop7@gmail.com
+    password: Projet7!
+    protocol: smtp
+    tls: true
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
 
 jwt:
   secret: secret

@@ -9,7 +9,7 @@ import java.util.List;
 public class UserLateBorrowing {
 
     private String name;
-    private String firsname;
+    private String firstname;
     private String email;
     private List<LateBorrowing> lateBorrowingList;
 

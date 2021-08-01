@@ -9,6 +9,7 @@ import org.compain.library.service.DTO.AuthenticationDTO;
 import org.compain.library.service.DTO.BookDTO;
 import org.compain.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
@@ -25,6 +26,8 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private UserService userService;
+    @Value("${batch.mail.password}")
+    private String pwd;
 
 
     @GetMapping

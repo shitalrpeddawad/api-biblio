@@ -1,5 +1,6 @@
 package org.compain.library.service;
 import org.compain.library.consumer.BookRepository;
+import org.compain.library.consumer.CategoryRepository;
 import org.compain.library.consumer.CopyRepository;
 import org.compain.library.model.Book;
 import org.compain.library.service.DTO.BookDTO;
@@ -57,11 +58,5 @@ public class BookService {
     public void createBook(Book book){
         bookRepository.save(book);
     }
-
-    public BookDTO getBook(Long idBook){
-        Book book = bookRepository.getBook(idBook);
-        return BookMapper.toDTO(book);
-    }
-
 
 }

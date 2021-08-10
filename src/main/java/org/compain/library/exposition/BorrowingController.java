@@ -49,12 +49,12 @@ public class BorrowingController {
     }
 
     @PostMapping("borrowing-new")
-    public void addBorrowing(@RequestBody BorrowingDTO newBorrowingDTO) {
+    public void addBorrowing(@RequestBody BorrowingDTO newBorrowingDTO, ClientToken user) {
         borrowingService.save(newBorrowingDTO);
     }
 
     @PostMapping("/recovery-late-borrowing")
-    public void sendMailForRecoveryLateBorrowing(@RequestBody UserLateBorrowing userLateBorrowing) throws MessagingException {
+    public void sendMailForRecoveryLateBorrowing(@RequestBody UserLateBorrowing userLateBorrowing, ClientToken user) throws MessagingException {
     mailService.sendMailForLateBorrowing(userLateBorrowing);
     }
 }

@@ -26,8 +26,6 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private UserService userService;
-    @Value("${batch.mail.password}")
-    private String pwd;
 
 
     @GetMapping
@@ -37,7 +35,7 @@ public class BookController {
 
     @GetMapping("/book")
     public BookDTO findBookById(ClientToken user,@RequestParam Long idBook) {
-        return bookService.findById(idBook);
+        return bookService.findById(idBook, userService.findByIdUser(user.getUserId()).get().getLibrary().getIdLibrary());
     }
 
     @GetMapping("/search")

@@ -22,8 +22,10 @@ public class BookService {
         this.copyRepository = copyRepository;
     }
 
-    public BookDTO findById(Long idBook){
-        return BookMapper.toDTO(bookRepository.findByIdBook(idBook));
+    public BookDTO findById(Long idBook, Long idLibrary){
+        BookDTO bookDto = BookMapper.toDTO(bookRepository.findByIdBook(idBook));
+        bookDto.setNumberOfCopies(copyRepository.countAvailableCopiesNumberByBookAndLibrary(bookDto.getIdBook(), idLibrary));
+        return bookDto;
     }
 
     public List<BookDTO> findAll() {
@@ -33,7 +35,7 @@ public class BookService {
 
     public List<BookDTO> findAllByLibrary(Long id) {
         List<Book> books = bookRepository.findBookByLibrary(id);
-        return books.stream().map(b-> Map.entry(b, copyRepository.countCopiesNumberByBookAndLibrary(b.getIdBook(),id)))
+        return books.stream().map(b-> Map.entry(b, copyRepository.countAvailableCopiesNumberByBookAndLibrary(b.getIdBook(),id)))
                 .map(BookMapper::toDTO).collect(toList());
 
     }

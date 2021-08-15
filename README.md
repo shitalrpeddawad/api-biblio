@@ -7,8 +7,6 @@ Apache Maven 3.6.3
 
 PostgreSQL 12
 
-Spring
-
 **Déploiement**
 ---------------
 Cloner les 3 projets sous GitHub

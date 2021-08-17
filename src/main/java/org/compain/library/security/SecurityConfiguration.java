@@ -53,8 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/accueil").permitAll()
                 .antMatchers("/connexion/signup").permitAll()
                 .antMatchers("/connexion/login").permitAll()
-                .antMatchers("/api/borrowings/late-borrowing").permitAll()
-                .antMatchers("/api/borrowings/recovery-late-borrowing").permitAll()
+                .antMatchers("/api/borrowings/late-borrowing").hasAnyRole("Admin", "Employee")
+                .antMatchers("/api/borrowings/recovery-late-borrowing").hasAnyRole("Admin", "Employee")
                 .anyRequest().authenticated();
     }
 

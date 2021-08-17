@@ -23,7 +23,7 @@ public class BorrowingController {
     private MailService mailService;
 
     @GetMapping
-    public List<BorrowingDTO> findAll() {
+    public List<BorrowingDTO> findAll(ClientToken user) {
         return borrowingService.findAll();
     }
 
@@ -33,7 +33,7 @@ public class BorrowingController {
     }
 
     @GetMapping("/late-borrowing")
-    public List<UserLateBorrowing> findBorrowingsPassed() {
+    public List<UserLateBorrowing> findBorrowingsPassed(ClientToken user) {
         LocalDateTime today = LocalDateTime.now();
         return borrowingService.findLateBorrowing(today);
     }

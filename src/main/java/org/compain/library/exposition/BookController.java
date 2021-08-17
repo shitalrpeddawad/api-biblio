@@ -43,11 +43,6 @@ public class BookController {
         return bookService.search(title, authorName, category, userService.findByIdUser(user.getUserId()).get().getLibrary().getIdLibrary());
     }
 
-    @DeleteMapping("delete")
-    public void deleteBook(ClientToken user, Long idBook){
-        bookService.deleteBook(idBook);
-    }
-
 }
 
 

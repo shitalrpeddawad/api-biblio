@@ -38,10 +38,4 @@ public class UserControler {
        userService.save(UserMapper.toEntity(userDto));
     }
 
-    @DeleteMapping("/delete")
-    public void delete(@RequestBody String token){
-
-    }
-
-
 }

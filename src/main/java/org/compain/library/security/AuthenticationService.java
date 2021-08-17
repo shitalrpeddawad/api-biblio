@@ -45,6 +45,7 @@ public class AuthenticationService implements UserDetailsService {
         Map<String, Object> claims = new HashMap<>();
         //TODO:: constant to avoid this magic string
         claims.put("account_id", user.getIdUser());
+        claims.put("role", user.getRole().getDesignation());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(user.getEmail())

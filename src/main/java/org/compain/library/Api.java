@@ -24,7 +24,8 @@ public class Api {
     public static void main(String[] args) {
         SpringApplication.run(Api.class, args);
     }
-
+    @Value("${batch.mail.password}")
+    String pwd;
     @Bean
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
@@ -32,11 +33,13 @@ public class Api {
     @Bean
     public JavaMailSender getJavaMailSender() {
 
+
+
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         mailSender.setUsername("testmailop7@gmail.com");
-        mailSender.setPassword("${batch.mail.password}");
+        mailSender.setPassword(pwd);
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

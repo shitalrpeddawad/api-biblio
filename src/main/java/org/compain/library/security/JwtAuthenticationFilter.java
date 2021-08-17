@@ -5,6 +5,8 @@ import io.jsonwebtoken.Jwts;
 import io.vavr.control.Try;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -13,6 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -46,8 +50,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter{
                 .setSigningKey(this.secret)
                 .parseClaimsJws(token)
                 .getBody();
+        String role = claims.get("role").toString();
         Long accountId = Long.parseLong(claims.get("account_id").toString());
-        return new ClientToken(claims.getSubject(), accountId);
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(role));
+        return new ClientToken(claims.getSubject(), accountId, authorities);
     }
 
 }

@@ -1,16 +1,27 @@
 package org.compain.library.service;
 
 import org.compain.library.model.Borrowing;
+import org.compain.library.model.Copy;
 import org.compain.library.model.User;
 import org.compain.library.service.DTO.UserLateBorrowing;
 import org.compain.library.service.DTO.BorrowingDTO;
 import org.compain.library.service.DTO.InfoBorrowingDTO;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class BorrowingMapper {
+
+    @Autowired
+    private final UserService userservice;
+
+    public BorrowingMapper(UserService userservice) {
+        this.userservice = userservice;
+    }
+
 
     public static InfoBorrowingDTO infoBorrowingDTO(Borrowing borrowing){
         InfoBorrowingDTO infoBorrowingDTO = new InfoBorrowingDTO();
@@ -36,11 +47,11 @@ public class BorrowingMapper {
         return borrowingDTO;
     }
 
-    public static Borrowing toEntity(BorrowingDTO borrowingDTO){
+    public static Borrowing toEntity(BorrowingDTO borrowingDTO, User user, Copy copy){
         Borrowing borrowing = new Borrowing();
         borrowing.setBorrowingDate(borrowingDTO.getBorrowingDate());
-        borrowing.setUser(UserMapper.toEntity(borrowingDTO.getUserDto()));
-        borrowing.setCopy(CopyMapper.toEntity(borrowingDTO.getCopyDto()));
+        borrowing.setUser(user);
+        borrowing.setCopy(copy);
         borrowing.setRenewal(borrowingDTO.getRenewal());
         borrowing.setReturned(borrowingDTO.getReturned());
         borrowing.setIdBorrowing(borrowingDTO.getIdBorrowing());

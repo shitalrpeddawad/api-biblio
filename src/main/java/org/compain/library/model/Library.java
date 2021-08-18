@@ -1,6 +1,7 @@
 package org.compain.library.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;

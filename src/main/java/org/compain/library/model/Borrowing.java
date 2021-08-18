@@ -1,6 +1,8 @@
 package org.compain.library.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,10 +18,12 @@ public class Borrowing {
     @Column(name = "id_borrowing")
     private Long idBorrowing;
 
+    @ToString.Exclude
     @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "id_copy", referencedColumnName = "id_copy" )
     private Copy copy;
 
+    @ToString.Exclude
     @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user", referencedColumnName = "id_user" )
     private User user;
